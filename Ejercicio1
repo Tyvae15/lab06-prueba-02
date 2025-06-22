@@ -1,0 +1,25 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class ShoppingCartTest {
+
+    @Test
+    void testAddProductHappyPath() {
+        ShoppingCart cart = new ShoppingCart();
+        cart.addProduct(15.5);
+        cart.addProduct(24.5);
+
+        assertEquals(2, cart.getProductCount(), "Debe haber 2 productos en el carrito");
+        assertEquals(40.0, cart.getTotal(), 0.001, "El total del carrito debe ser 40.0");
+    }
+    @Test
+    void testAddProductUnhappyPath() {
+        ShoppingCart cart = new ShoppingCart();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            cart.addProduct(-5.0); // precio negativo
+        });
+
+        assertEquals("Price must be positive", exception.getMessage(), "Mensaje de excepción incorrecto");
+    }
+}
